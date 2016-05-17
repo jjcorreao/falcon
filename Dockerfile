@@ -29,7 +29,8 @@ RUN printf "/opt/cray/mpt/default/gni/mpich2-gnu/48/lib\n" >> /etc/ld.so.conf &&
     printf "/opt/cray/wlm_detect/default/lib64/libwlm_detect.so.0" >> /etc/ld.so.preload && \
     ldconfig
 
-ADD Anaconda2-4.0.0-Linux-x86_64.sh /tmp
+#ADD Anaconda2-4.0.0-Linux-x86_64.sh /tmp
+ADD http://portal.nersc.gov/project/mlhub/Anaconda2-4.0.0-Linux-x86_64.sh /tmp
 #ADD http://repo.continuum.io/archive/Anaconda2-4.0.0-Linux-x86_64.sh /tmp
 RUN bash /tmp/Anaconda2-4.0.0-Linux-x86_64.sh -b
 ENV PATH /root/anaconda2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
