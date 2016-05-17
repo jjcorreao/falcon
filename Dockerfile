@@ -18,7 +18,6 @@ RUN yum --enablerepo=updates clean metadata && \
 
 WORKDIR /
 ADD optcray_alva.tar /
-#RUN tar -zxvf optcray_alva.tar
 RUN printf "/opt/cray/mpt/default/gni/mpich2-gnu/48/lib\n" >> /etc/ld.so.conf && \
     printf "/opt/cray/pmi/default/lib64\n" >> /etc/ld.so.conf && \
     printf "/opt/cray/ugni/default/lib64\n" >> /etc/ld.so.conf && \
@@ -29,14 +28,18 @@ RUN printf "/opt/cray/mpt/default/gni/mpich2-gnu/48/lib\n" >> /etc/ld.so.conf &&
     printf "/opt/cray/wlm_detect/default/lib64/libwlm_detect.so.0" >> /etc/ld.so.preload && \
     ldconfig
 
-#ADD Anaconda2-4.0.0-Linux-x86_64.sh /tmp
 ADD http://portal.nersc.gov/project/mlhub/Anaconda2-4.0.0-Linux-x86_64.sh /tmp
-#ADD http://repo.continuum.io/archive/Anaconda2-4.0.0-Linux-x86_64.sh /tmp
 RUN bash /tmp/Anaconda2-4.0.0-Linux-x86_64.sh -b
 ENV PATH /root/anaconda2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
+RUN echo /root/anaconda2/lib >> /etc/ld.so.conf
+RUN ldconfig -v
+
+# if additional additional requirements are needed
+# python pkgs can be put in the repo under requirements.txt
 #ADD requirements.txt /tmp
 #RUN pip install -r /tmp/requirements.txt
+
 RUN git clone git://github.com/PacificBiosciences/FALCON-integrate.git
 WORKDIR /FALCON-integrate
 ENV FC /FALCON-integrate/fc_env
