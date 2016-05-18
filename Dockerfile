@@ -29,11 +29,12 @@ RUN printf "/opt/cray/mpt/default/gni/mpich2-gnu/48/lib\n" >> /etc/ld.so.conf &&
     ldconfig
 
 ADD http://portal.nersc.gov/project/mlhub/Anaconda2-4.0.0-Linux-x86_64.sh /tmp
-RUN bash /tmp/Anaconda2-4.0.0-Linux-x86_64.sh -b
-ENV PATH /root/anaconda2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+#ADD Anaconda2-4.0.0-Linux-x86_64.sh /tmp
+RUN bash /tmp/Anaconda2-4.0.0-Linux-x86_64.sh -b -p /usr/anaconda
+ENV PATH /usr/anaconda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-RUN echo /root/anaconda2/lib >> /etc/ld.so.conf
-RUN ldconfig -v
+#RUN printf "/usr/anaconda/lib\n" >> /etc/ld.so.conf && \
+#    ldconfig
 
 # if additional additional requirements are needed
 # python pkgs can be put in the repo under requirements.txt
